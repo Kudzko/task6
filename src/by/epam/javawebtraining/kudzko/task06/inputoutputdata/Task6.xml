@@ -1,0 +1,42 @@
+<?zml version="1" encoding="UTF-8" ?>
+
+<Greenhouse>
+
+
+    <Flower>
+        <Name>Rose</Name>
+        <Soil>ground</Soil>
+        <Origin>Netherlands</Origin>
+        <Visual_param>
+            <Size>70</Size>
+            <Color>red</Color>
+            <Leaf_color>green</Leaf_color>
+        </Visual_param>
+        <Growing_tips>
+            <Temperature>20.0</Temperature>
+            <Lighting>3000</Lighting>
+            <Watering>10000</Watering>
+        </Growing_tips>
+        <Multiplying>cutting</Multiplying>
+    </Flower>
+
+    <Flower>
+        <Name>MyFlower</Name>
+        <Soil>ground</Soil>
+        <Origin>Belarus</Origin>
+        <Visual_param>
+            <Size>100</Size>
+            <Color>red</Color>
+            <Leaf_color>green</Leaf_color>
+        </Visual_param>
+        <Growing_tips>
+            <Temperature>20.0</Temperature>
+            <Lighting>4000</Lighting>
+            <Watering>5000</Watering>
+        </Growing_tips>
+        <Multiplying>cutting</Multiplying>
+    </Flower>
+
+
+</Greenhouse>
+

@@ -1,0 +1,63 @@
+<?zml version="1" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.epam.by/javawebtraining/kudzko/task06/model/entity/generated"
+           xmlns:tns="http://www.epam.by/javawebtraining/kudzko/task06/model/entity/generated"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://www.task6.src.by/epam/javawebtraining/kudzko/task06/inputoutputdata ">
+
+    <xs:element name="Greenhouse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Flower" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="Flower">
+
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Name" type="xs:string"/>
+                <xs:element name="Soil">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="podzol"/>
+                            <xs:enumeration value="ground"/>
+                            <xs:enumeration value="sod-podzolic"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="Origin" type="xs:string"/>
+                <xs:element name="Visual_param">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Size" type="xs:double"/>
+                            <xs:element name="Color" type="xs:string"/>
+                            <xs:element name="Leaf_color" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Growing_tips">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Temperature" type="xs:double"/>
+                            <xs:element name="Lighting" type="xs:double"/>
+                            <xs:element name="Watering" type="xs:double"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Multiplying">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="leaf"/>
+                            <xs:enumeration value="cutting"/>
+                            <xs:enumeration value="seed"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+
+    </xs:element>
+
+</xs:schema>

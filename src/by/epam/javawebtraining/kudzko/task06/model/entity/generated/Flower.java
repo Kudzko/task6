@@ -333,6 +333,14 @@ public class Flower {
             this.watering = value;
         }
 
+        @Override
+        public String toString() {
+            return "GrowingTips{" +
+                    "temperature=" + temperature +
+                    ", lighting=" + lighting +
+                    ", watering=" + watering +
+                    '}';
+        }
     }
 
 
@@ -436,6 +444,14 @@ public class Flower {
             this.leafColor = value;
         }
 
+        @Override
+        public String toString() {
+            return "VisualParam{" +
+                    "size=" + size +
+                    ", color='" + color + '\'' +
+                    ", leafColor='" + leafColor + '\'' +
+                    '}';
+        }
     }
 
     @Override

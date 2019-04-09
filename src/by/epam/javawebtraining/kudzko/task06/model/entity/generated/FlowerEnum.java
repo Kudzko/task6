@@ -27,21 +27,4 @@ public enum  FlowerEnum {
     }
 }
 
-   /* GREENHOUSE("Greenhouse"),
-    FLOWER("Flower"),
-    NAME("Name"),
-    SOIL("Soil"),
-    ORIGIN("Origin"),
-    VISUAL_PARAM("Visual_param"),
-    GROWING_TIPS("Growing_tips"),
-    MULTIPLYING("Multiplying");
 
-    private String value;
-
-    private FlowerEnum(String value) {
-        this.value = value;
-    }
-
-    public String getValue(){
-        return value;
-    }*/

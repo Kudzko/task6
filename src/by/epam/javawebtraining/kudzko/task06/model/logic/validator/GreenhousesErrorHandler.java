@@ -18,7 +18,7 @@ public class GreenhousesErrorHandler extends DefaultHandler {
     }
 
     public void warning(SAXParseException e ){
-        logger.warn(getLineAdress(e) + " - " + e.getMessage());
+        logger.warn(" " + getLineAdress(e) + " - " + e.getMessage());
     }
 
     public void error(SAXParseException e ){

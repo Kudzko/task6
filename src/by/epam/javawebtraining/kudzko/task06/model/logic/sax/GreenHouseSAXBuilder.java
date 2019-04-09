@@ -6,10 +6,11 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
 public class GreenHouseSAXBuilder {
-    private Set<Flower> flowers;
+    private List<Flower> flowers;
     private GreenHouseHandler greenHouseHandler;
     private XMLReader reader;
 
@@ -26,11 +27,11 @@ public class GreenHouseSAXBuilder {
         }
     }
 
-    public Set<Flower> getFlowers() {
+    public List<Flower> getFlowers() {
         return flowers;
     }
 
-    public void buildSetFlowers(String filename){
+    public void buildListFlowers(String filename){
         try {
             // parsing XML-document
             reader.parse(filename);

@@ -2,19 +2,18 @@ package by.epam.javawebtraining.kudzko.task06.model.logic.sax;
 
 import by.epam.javawebtraining.kudzko.task06.model.entity.generated.Flower;
 import by.epam.javawebtraining.kudzko.task06.model.entity.generated.FlowerEnum;
+import by.epam.javawebtraining.kudzko.task06.model.logic.Constants;
 import by.epam.javawebtraining.kudzko.task06.model.logic.exception.logicexception.EnumConstantNotExistExceptoin;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import java.util.EnumSet;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class GreenHouseHandler extends DefaultHandler {
+    public static final String ELEMENT_FLOWER = Constants.ELEMENT_FLOWER;
 
-    private Set<Flower> flowers;
+    private List<Flower> flowers;
     private Flower current = null;
     private Flower.VisualParam currentVisualparam;
     private Flower.GrowingTips currentGrowingTips;
@@ -22,25 +21,22 @@ public class GreenHouseHandler extends DefaultHandler {
     private EnumSet<FlowerEnum> withText;
 
     public GreenHouseHandler() {
-        flowers = new HashSet<>();
+        flowers = new ArrayList<>();
         withText = EnumSet.range(FlowerEnum.NAME, FlowerEnum.MULTIPLYING);
     }
 
-    public Set<Flower> getFlowers() {
+    public List<Flower> getFlowers() {
         return flowers;
     }
 
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-        if ("Flower".equals(localName)) {
+        if (ELEMENT_FLOWER.equals(localName)) {
             current = new Flower();
-
-        } else if ("Visual_param".equals(localName)) {
             currentVisualparam = new Flower.VisualParam();
-        }else if ("Growing_tips".equals(localName)) {
             currentGrowingTips = new Flower.GrowingTips();
-        }else {
+        } else {
             FlowerEnum temp = FlowerEnum.valueOf(localName.toUpperCase());
             if (withText.contains(temp)) {
                 currentEnum = temp;
@@ -50,7 +46,7 @@ public class GreenHouseHandler extends DefaultHandler {
 
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
-        if ("Flower".equals(localName)) {
+        if (ELEMENT_FLOWER.equals(localName)) {
             flowers.add(current);
         }
     }
@@ -80,7 +76,7 @@ public class GreenHouseHandler extends DefaultHandler {
                     currentVisualparam.setColor(s);
                     break;
                 case LEAF_COLOR:
-                    currentVisualparam.setColor(s);
+                    currentVisualparam.setLeafColor(s);
                     break;
 
                 case GROWING_TIPS:

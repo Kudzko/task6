@@ -2,6 +2,8 @@ package by.epam.javawebtraining.kudzko.task06.model.logic.stax;
 
 import by.epam.javawebtraining.kudzko.task06.model.entity.generated.Flower;
 import by.epam.javawebtraining.kudzko.task06.model.entity.generated.FlowerEnum;
+import by.epam.javawebtraining.kudzko.task06.model.logic.AbstractBuilder;
+import by.epam.javawebtraining.kudzko.task06.model.logic.sax.GreenHouseSAXBuilder;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -14,18 +16,42 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyStAXBuilder {
-    private List<Flower> flowers = new ArrayList<>();
+public class MyStAXBuilder extends AbstractBuilder {
+    private volatile static MyStAXBuilder instance;
     private XMLInputFactory inputFactory;
 
-    public MyStAXBuilder() {
+    private MyStAXBuilder() {
         inputFactory = XMLInputFactory.newInstance();
     }
 
-    public List<Flower> getFlowers() {
-        return flowers;
+    private MyStAXBuilder(List<Flower> flowers) {
+        super(flowers);
     }
 
+    public static MyStAXBuilder getInstance() {
+        if (instance == null) {
+            synchronized (AbstractBuilder.class) {
+                if (instance == null) {
+                    instance = new MyStAXBuilder();
+                }
+            }
+        }
+        return instance;
+    }
+
+    public static MyStAXBuilder getInstance(List<Flower> flowers) {
+        if (instance == null) {
+            synchronized (AbstractBuilder.class) {
+                if (instance == null) {
+                    instance = new MyStAXBuilder(flowers);
+                }
+            }
+        }
+        return instance;
+    }
+
+
+    @Override
     public void buildListFlowers(String fileName) {
         FileInputStream inputStream = null;
         XMLStreamReader reader = null;
@@ -38,7 +64,7 @@ public class MyStAXBuilder {
                 int type = reader.next();
                 if (type == XMLStreamConstants.START_ELEMENT) {
                     name = reader.getLocalName();
-                    if (FlowerEnum.valueOf(name.toUpperCase()).equals(FlowerEnum.FLOWER) ) {
+                    if (FlowerEnum.valueOf(name.toUpperCase()).equals(FlowerEnum.FLOWER)) {
                         Flower flower = buildFlower(reader);
                         flowers.add(flower);
                     }
@@ -126,7 +152,7 @@ public class MyStAXBuilder {
                 case XMLStreamConstants.END_ELEMENT:
                     name = reader.getLocalName();
                     if (FlowerEnum.valueOf(name.toUpperCase()).equals(FlowerEnum
-                            .VISUAL_PARAM) ) {
+                            .VISUAL_PARAM)) {
                         return visualParam;
                     }
                     break;

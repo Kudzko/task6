@@ -1,6 +1,7 @@
 package by.epam.javawebtraining.kudzko.task06.model.logic.dom;
 
 import by.epam.javawebtraining.kudzko.task06.model.entity.generated.Flower;
+import by.epam.javawebtraining.kudzko.task06.model.logic.AbstractBuilder;
 import by.epam.javawebtraining.kudzko.task06.model.logic.Constants;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class GreenHouseDOMBuilder {
+public class GreenHouseDOMBuilder extends AbstractBuilder {
 
     public static final String ELEMENT_FLOWER = Constants.ELEMENT_FLOWER;
     public static final String ELEMENT_NAME = Constants.ELEMENT_NAME;
@@ -30,12 +31,11 @@ public class GreenHouseDOMBuilder {
     public static final String ELEMENT_WATERING = Constants.ELEMENT_WATERING;
     public static final String ELEMENT_MULTIPLYING = Constants.ELEMENT_MULTIPLYING;
 
-
-    private List<Flower> flowerList;
+    private volatile static GreenHouseDOMBuilder instance;
     private DocumentBuilder documentBuilder;
 
-    public GreenHouseDOMBuilder() {
-        this.flowerList = new ArrayList<>();
+    private GreenHouseDOMBuilder() {
+        this.flowers = new ArrayList<>();
         // creating DOM analyzer
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
@@ -46,11 +46,43 @@ public class GreenHouseDOMBuilder {
         }
     }
 
-    public List<Flower> getFlowerList() {
-        return flowerList;
+    public GreenHouseDOMBuilder(List<Flower> flowers) {
+        super(flowers);
+        // creating DOM analyzer
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+
+        try {
+            documentBuilder = factory.newDocumentBuilder();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
+
     }
 
-    public void buildSetFlowers(String filename) {
+    public static GreenHouseDOMBuilder getInstance(){
+        if (instance == null){
+            synchronized (GreenHouseDOMBuilder.class){
+                if (instance == null){
+                    instance = new GreenHouseDOMBuilder();
+                }
+            }
+        }
+        return instance;
+    }
+
+    public static GreenHouseDOMBuilder getInstance(List<Flower> flowers){
+        if (instance == null){
+            synchronized (GreenHouseDOMBuilder.class){
+                if (instance == null){
+                    instance = new GreenHouseDOMBuilder(flowers);
+                }
+            }
+        }
+        return instance;
+    }
+
+    @Override
+    public void buildListFlowers(String filename) {
         Document document = null;
         try {
             // parsing XML - document and creating tree structure
@@ -63,7 +95,7 @@ public class GreenHouseDOMBuilder {
             for (int i = 0; i < flowerList.getLength(); i++) {
                 Element flowerElement = (Element) flowerList.item(i);
                 Flower flower = buildFlower(flowerElement);
-                this.flowerList.add(flower);
+                this.flowers.add(flower);
             }
 
         } catch (SAXException e) {

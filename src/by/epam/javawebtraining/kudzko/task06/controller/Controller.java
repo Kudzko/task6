@@ -1,5 +1,6 @@
 package by.epam.javawebtraining.kudzko.task06.controller;
 
+import by.epam.javawebtraining.kudzko.task06.model.entity.generated.Flower;
 import by.epam.javawebtraining.kudzko.task06.model.logic.AbstractBuilder;
 import by.epam.javawebtraining.kudzko.task06.model.logic.MyBuilderFactory;
 import by.epam.javawebtraining.kudzko.task06.model.logic.dom.DOMDocumentCreator;
@@ -18,6 +19,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
 
 public class Controller {
@@ -36,14 +38,13 @@ public class Controller {
             FileInputStream config = new FileInputStream(CONFIG_PATH);
             properties.load(config);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            LOGGER.warn("Not found property file with config", e);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.warn("couldn't read property in file config", e);
         }
         String fileName = properties.getProperty("fileName");
         String schemaName = properties.getProperty("schemaName");
         String logPathForValidator = properties.getProperty("logPathForValidator");
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+fileName);
 
         //  validator 1
         MyValidator myValidator = MyValidatorSAXXSD.getInstance();
@@ -74,62 +75,58 @@ public class Controller {
         try {
             Process pr = rt.exec("xjc.exe " + createClassFromXMLDoc);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.warn("Command to create class Flower from xml can not read", e);
         }
 
         // launching SAX builder
         GreenHouseSAXBuilder greenHouseSAXBuilder = GreenHouseSAXBuilder.getInstance();
         greenHouseSAXBuilder.buildListFlowers(fileName);
-        System.out.println("===SAX===");
-        System.out.println(greenHouseSAXBuilder.getFlowers());
+        List<Flower> flowers1 = greenHouseSAXBuilder.getFlowers();
+        LOGGER.info("===SAX===\n" + flowers1);
+
 
         //launching DOM builder
         // creating objects on base of Document
 
         GreenHouseDOMBuilder greenHouseDOMBuilder = GreenHouseDOMBuilder.getInstance();
         greenHouseDOMBuilder.buildListFlowers(fileName);
-        System.out.println("===DOM===");
-        System.out.println(greenHouseDOMBuilder.getFlowers());
-
+        List<Flower> flowers2 = greenHouseDOMBuilder.getFlowers();
+        LOGGER.info("===DOM===\n" + flowers2);
 
         //launching DOM builder
         // creating and writing document
-
-
         DOMDocumentCreator.createDocument(greenHouseDOMBuilder.getFlowers());
 
         // StAX parser
 
         MyStAXBuilder myStAXBuilder = MyStAXBuilder.getInstance();
         myStAXBuilder.buildListFlowers(fileName);
-        System.out.println("===StAX===");
-        System.out.println(myStAXBuilder.getFlowers());
+        List<Flower> flowers3 = myStAXBuilder.getFlowers();
+        LOGGER.info("===StAX===\n" + flowers3);
 
 
         // launch parsers with help creator
 
         MyBuilderFactory factory = new MyBuilderFactory();
 
-        System.out.println("===SAX===");
         AbstractBuilder saxBuilder = factory.createBuilder(MyBuilderFactory
                 .ParserType.SAX);
         saxBuilder.buildListFlowers(fileName);
-        System.out.println(saxBuilder.getFlowers());
+        List<Flower> flowers4 = saxBuilder.getFlowers();
+        LOGGER.info("===SAX===\n" + flowers3);
 
         System.out.println("===StAX===");
         AbstractBuilder staxbuilder = factory.createBuilder(MyBuilderFactory
                 .ParserType.STAX);
         staxbuilder.buildListFlowers(fileName);
-        System.out.println(staxbuilder.getFlowers());
+        List<Flower> flowers5 = staxbuilder.getFlowers();
+        LOGGER.info("===StAX===\n" + flowers5);
 
         System.out.println("===DOM===");
         AbstractBuilder domBuilder = factory.createBuilder(MyBuilderFactory
                 .ParserType.DOM);
         domBuilder.buildListFlowers(fileName);
-        System.out.println(domBuilder.getFlowers());
-
-
+        List<Flower> flowers6 = domBuilder.getFlowers();
+        LOGGER.info("===DOM===\n" + flowers6);
     }
-
-
 }

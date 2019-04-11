@@ -13,6 +13,8 @@ import java.util.*;
 public class GreenHouseHandler extends DefaultHandler {
     public static final String ELEMENT_FLOWER = Constants.ELEMENT_FLOWER;
 
+    private static GreenHouseHandler instance;
+
     private List<Flower> flowers;
     private Flower current = null;
     private Flower.VisualParam currentVisualparam;
@@ -20,7 +22,7 @@ public class GreenHouseHandler extends DefaultHandler {
     private FlowerEnum currentEnum = null;
     private EnumSet<FlowerEnum> withText;
 
-    public GreenHouseHandler() {
+    private GreenHouseHandler() {
         flowers = new ArrayList<>();
         withText = EnumSet.range(FlowerEnum.NAME, FlowerEnum.MULTIPLYING);
     }
@@ -29,6 +31,16 @@ public class GreenHouseHandler extends DefaultHandler {
         return flowers;
     }
 
+    public static GreenHouseHandler getInstance(){
+        if ( instance == null){
+            synchronized (GreenHouseHandler.class){
+                if (instance == null){
+                    instance = new GreenHouseHandler();
+                }
+            }
+        }
+        return instance;
+    }
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
@@ -104,6 +116,7 @@ public class GreenHouseHandler extends DefaultHandler {
 
     @Override
     public void startDocument() throws SAXException {
+        flowers = new ArrayList<>();
         super.startDocument();
     }
 

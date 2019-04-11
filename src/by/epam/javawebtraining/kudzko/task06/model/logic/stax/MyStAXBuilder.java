@@ -4,6 +4,7 @@ import by.epam.javawebtraining.kudzko.task06.model.entity.generated.Flower;
 import by.epam.javawebtraining.kudzko.task06.model.entity.generated.FlowerEnum;
 import by.epam.javawebtraining.kudzko.task06.model.logic.AbstractBuilder;
 import by.epam.javawebtraining.kudzko.task06.model.logic.sax.GreenHouseSAXBuilder;
+import org.apache.log4j.Logger;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -17,8 +18,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyStAXBuilder extends AbstractBuilder {
+    public static final Logger LOGGER;
+
     private volatile static MyStAXBuilder instance;
     private XMLInputFactory inputFactory;
+
+    static {
+        LOGGER = Logger.getRootLogger();
+    }
 
     private MyStAXBuilder() {
         inputFactory = XMLInputFactory.newInstance();
@@ -53,6 +60,7 @@ public class MyStAXBuilder extends AbstractBuilder {
 
     @Override
     public void buildListFlowers(String fileName) {
+        flowers = new ArrayList<>();
         FileInputStream inputStream = null;
         XMLStreamReader reader = null;
         String name;

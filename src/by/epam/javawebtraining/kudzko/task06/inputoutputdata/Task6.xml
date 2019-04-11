@@ -2,7 +2,6 @@
 
 <Greenhouse>
 
-
     <Flower>
         <Name>Rose</Name>
         <Soil>ground</Soil>
@@ -36,7 +35,6 @@
         </Growing_tips>
         <Multiplying>cutting</Multiplying>
     </Flower>
-
 
 </Greenhouse>
 

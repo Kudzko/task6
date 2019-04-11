@@ -34,8 +34,7 @@ public class GreenHouseDOMBuilder extends AbstractBuilder {
     private volatile static GreenHouseDOMBuilder instance;
     private DocumentBuilder documentBuilder;
 
-    private GreenHouseDOMBuilder() {
-        this.flowers = new ArrayList<>();
+    {
         // creating DOM analyzer
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
@@ -44,25 +43,21 @@ public class GreenHouseDOMBuilder extends AbstractBuilder {
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         }
+    }
+
+    private GreenHouseDOMBuilder() {
+        flowers = new ArrayList<>();
+
     }
 
     public GreenHouseDOMBuilder(List<Flower> flowers) {
         super(flowers);
-        // creating DOM analyzer
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-
-        try {
-            documentBuilder = factory.newDocumentBuilder();
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        }
-
     }
 
-    public static GreenHouseDOMBuilder getInstance(){
-        if (instance == null){
-            synchronized (GreenHouseDOMBuilder.class){
-                if (instance == null){
+    public static GreenHouseDOMBuilder getInstance() {
+        if (instance == null) {
+            synchronized (GreenHouseDOMBuilder.class) {
+                if (instance == null) {
                     instance = new GreenHouseDOMBuilder();
                 }
             }
@@ -70,10 +65,10 @@ public class GreenHouseDOMBuilder extends AbstractBuilder {
         return instance;
     }
 
-    public static GreenHouseDOMBuilder getInstance(List<Flower> flowers){
-        if (instance == null){
-            synchronized (GreenHouseDOMBuilder.class){
-                if (instance == null){
+    public static GreenHouseDOMBuilder getInstance(List<Flower> flowers) {
+        if (instance == null) {
+            synchronized (GreenHouseDOMBuilder.class) {
+                if (instance == null) {
                     instance = new GreenHouseDOMBuilder(flowers);
                 }
             }
@@ -83,13 +78,14 @@ public class GreenHouseDOMBuilder extends AbstractBuilder {
 
     @Override
     public void buildListFlowers(String filename) {
+        flowers = new ArrayList<>();
         Document document = null;
         try {
             // parsing XML - document and creating tree structure
             document = documentBuilder.parse(filename);
             Element root = document.getDocumentElement();
 
-            // gettig child elements <flower>
+            // getting child elements <flower>
             NodeList flowerList = root.getElementsByTagName(ELEMENT_FLOWER);
 
             for (int i = 0; i < flowerList.getLength(); i++) {

@@ -63,9 +63,9 @@ public class Controller {
             reader.parse(fileName);
 
         } catch (SAXException e) {
-            e.printStackTrace();
+            LOGGER.warn("XMLReader can not create XMLReader", e);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.warn("XMLReader can not read xml", e);
         }
 
         // launching command line from java to create class from xml
@@ -82,7 +82,7 @@ public class Controller {
         GreenHouseSAXBuilder greenHouseSAXBuilder = GreenHouseSAXBuilder.getInstance();
         greenHouseSAXBuilder.buildListFlowers(fileName);
         List<Flower> flowers1 = greenHouseSAXBuilder.getFlowers();
-        LOGGER.info("===SAX===\n" + flowers1);
+        LOGGER.info("\n===SAX===\n" + flowers1 + "\n");
 
 
         //launching DOM builder
@@ -91,7 +91,7 @@ public class Controller {
         GreenHouseDOMBuilder greenHouseDOMBuilder = GreenHouseDOMBuilder.getInstance();
         greenHouseDOMBuilder.buildListFlowers(fileName);
         List<Flower> flowers2 = greenHouseDOMBuilder.getFlowers();
-        LOGGER.info("===DOM===\n" + flowers2);
+        LOGGER.info("\n===DOM===\n" + flowers2 + "\n");
 
         //launching DOM builder
         // creating and writing document
@@ -102,7 +102,7 @@ public class Controller {
         MyStAXBuilder myStAXBuilder = MyStAXBuilder.getInstance();
         myStAXBuilder.buildListFlowers(fileName);
         List<Flower> flowers3 = myStAXBuilder.getFlowers();
-        LOGGER.info("===StAX===\n" + flowers3);
+        LOGGER.info("\n===StAX===\n" + flowers3 + "\n");
 
 
         // launch parsers with help creator
@@ -113,20 +113,20 @@ public class Controller {
                 .ParserType.SAX);
         saxBuilder.buildListFlowers(fileName);
         List<Flower> flowers4 = saxBuilder.getFlowers();
-        LOGGER.info("===SAX===\n" + flowers3);
+        LOGGER.info("\n===SAX===\n" + flowers4 + "\n");
 
-        System.out.println("===StAX===");
+
         AbstractBuilder staxbuilder = factory.createBuilder(MyBuilderFactory
                 .ParserType.STAX);
         staxbuilder.buildListFlowers(fileName);
         List<Flower> flowers5 = staxbuilder.getFlowers();
-        LOGGER.info("===StAX===\n" + flowers5);
+        LOGGER.info("\n===StAX===\n" + flowers5 + "\n");
 
-        System.out.println("===DOM===");
+
         AbstractBuilder domBuilder = factory.createBuilder(MyBuilderFactory
                 .ParserType.DOM);
         domBuilder.buildListFlowers(fileName);
         List<Flower> flowers6 = domBuilder.getFlowers();
-        LOGGER.info("===DOM===\n" + flowers6);
+        LOGGER.info("\n===DOM===\n" + flowers6 + "\n");
     }
 }

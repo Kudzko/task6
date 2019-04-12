@@ -1,15 +1,14 @@
 <?zml version="1" encoding="UTF-8" ?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           targetNamespace="http://www.epam.by/javawebtraining/kudzko/task06/model/entity/generated"
-           xmlns:tns="http://www.epam.by/javawebtraining/kudzko/task06/model/entity/generated"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="http://www.task6.src.by/epam/javawebtraining/kudzko/task06/inputoutputdata "
+           targetNamespace="https://www.epam.by/javawebtraining/kudzko/task06/inputoutputdata"
+           xmlns="https://www.epam.by/javawebtraining/kudzko/task06/inputoutputdata"
+
            elementFormDefault="qualified">
 
     <xs:element name="Greenhouse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="tns:Flower" minOccurs="1" maxOccurs="unbounded"/>
+                <xs:element ref="Flower" minOccurs="1" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

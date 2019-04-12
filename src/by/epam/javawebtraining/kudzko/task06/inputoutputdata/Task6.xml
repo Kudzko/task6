@@ -1,6 +1,8 @@
 <?zml version="1" encoding="UTF-8" ?>
 
-<Greenhouse>
+<Greenhouse xmlns:xsi="https://www.epam.by/javawebtraining/kudzko/task06/inputoutputdata"
+            xmlns="https://www.epam.by/javawebtraining/kudzko/task06/inputoutputdata"
+            xsi:schemaLocation="https://www.epam.by/javawebtraining/kudzko/task06/inputoutputdata Task6XSD.xsd">
 
     <Flower>
         <Name>Rose</Name>

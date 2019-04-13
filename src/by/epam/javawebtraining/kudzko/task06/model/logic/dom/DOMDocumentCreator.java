@@ -2,6 +2,7 @@ package by.epam.javawebtraining.kudzko.task06.model.logic.dom;
 
 import by.epam.javawebtraining.kudzko.task06.model.entity.generated.Flower;
 import by.epam.javawebtraining.kudzko.task06.model.logic.Constants;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class DOMDocumentCreator {
+    public static final Logger LOGGER;
     public static final String ROOT = Constants.ROOT;
     public static final String ELEMENT_FLOWER = Constants.ELEMENT_FLOWER;
     public static final String ELEMENT_NAME = Constants.ELEMENT_NAME;
@@ -35,6 +37,10 @@ public class DOMDocumentCreator {
     public static final String ELEMENT_MULTIPLYING = Constants.ELEMENT_MULTIPLYING;
     public static final String OUT_PUT_DOCUMENT = Constants.OUT_PUT_DOCUMENT;
 
+    static {
+        LOGGER = Logger.getRootLogger();
+    }
+
     public static void createDocument(List<Flower> flowerList) {
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory
                 .newInstance();
@@ -44,7 +50,7 @@ public class DOMDocumentCreator {
             documentBuilder = documentBuilderFactory.newDocumentBuilder();
 
         } catch (ParserConfigurationException e) {
-            e.printStackTrace();
+           LOGGER.warn("Can not create document",e );
         }
 
         Document document = documentBuilder.newDocument();
@@ -117,11 +123,12 @@ public class DOMDocumentCreator {
 
             transformer.transform(source, result);
         } catch (TransformerConfigurationException e) {
-            e.printStackTrace();
+           LOGGER.warn("Wrong transformer configuration", e);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.warn("Can not create OUT_PUT_DOCUMENT", e);
         } catch (TransformerException e) {
-            e.printStackTrace();
+            LOGGER.warn("Can not transform document. May something wrong with" +
+                    " source document", e);
         }
     }
 

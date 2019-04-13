@@ -15,6 +15,10 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * simple example with hardcode. see class DOMDocumentCreator
+ */
+
 public class SimpleDOMDocumentCreator {
 
     public static void createDocument(){

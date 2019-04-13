@@ -3,6 +3,7 @@ package by.epam.javawebtraining.kudzko.task06.model.logic.dom;
 import by.epam.javawebtraining.kudzko.task06.model.entity.generated.Flower;
 import by.epam.javawebtraining.kudzko.task06.model.logic.AbstractBuilder;
 import by.epam.javawebtraining.kudzko.task06.model.logic.Constants;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -18,7 +19,7 @@ import java.util.List;
 
 
 public class GreenHouseDOMBuilder extends AbstractBuilder {
-
+    public static final Logger LOGGER;
     public static final String ELEMENT_FLOWER = Constants.ELEMENT_FLOWER;
     public static final String ELEMENT_NAME = Constants.ELEMENT_NAME;
     public static final String ELEMENT_SOIL = Constants.ELEMENT_SOIL;
@@ -34,6 +35,10 @@ public class GreenHouseDOMBuilder extends AbstractBuilder {
     private volatile static GreenHouseDOMBuilder instance;
     private DocumentBuilder documentBuilder;
 
+    static {
+        LOGGER = Logger.getRootLogger();
+    }
+
     {
         // creating DOM analyzer
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -41,7 +46,7 @@ public class GreenHouseDOMBuilder extends AbstractBuilder {
         try {
             documentBuilder = factory.newDocumentBuilder();
         } catch (ParserConfigurationException e) {
-            e.printStackTrace();
+           LOGGER.warn("Can not create document builder",e);
         }
     }
 
@@ -50,7 +55,7 @@ public class GreenHouseDOMBuilder extends AbstractBuilder {
 
     }
 
-    public GreenHouseDOMBuilder(List<Flower> flowers) {
+    private GreenHouseDOMBuilder(List<Flower> flowers) {
         super(flowers);
     }
 
@@ -94,10 +99,8 @@ public class GreenHouseDOMBuilder extends AbstractBuilder {
                 this.flowers.add(flower);
             }
 
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (SAXException |  IOException e) {
+           LOGGER.warn("DocumentBuilder can not parse xml document",e );
         }
     }
 

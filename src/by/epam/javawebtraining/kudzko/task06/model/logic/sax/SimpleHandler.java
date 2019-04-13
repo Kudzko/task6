@@ -4,6 +4,9 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+/**
+ * Simple example of handler with hardcode. See GreenHouseHandler.
+ */
 public class SimpleHandler extends DefaultHandler {
     @Override
     public void startDocument() throws SAXException {

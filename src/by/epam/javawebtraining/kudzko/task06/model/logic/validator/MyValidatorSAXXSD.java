@@ -1,5 +1,6 @@
 package by.epam.javawebtraining.kudzko.task06.model.logic.validator;
 
+import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
@@ -12,9 +13,15 @@ import java.io.File;
 import java.io.IOException;
 
 public class MyValidatorSAXXSD implements MyValidator {
+    public static Logger LOGGER;
+
     private volatile static MyValidatorSAXXSD uniqueInstance;
     String fileName;
     String schemaName;
+
+    static {
+        LOGGER = Logger.getRootLogger();
+    }
 
     private MyValidatorSAXXSD() {
     }
@@ -51,9 +58,9 @@ public class MyValidatorSAXXSD implements MyValidator {
             validator.validate(source);
            // LOG!!!!!!!!!!
         } catch (SAXException e) {
-            e.printStackTrace();
+            LOGGER.warn("Can not create new schema and validate document", e);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.warn("Can not create handler and validate document", e);
         }
     }
 }

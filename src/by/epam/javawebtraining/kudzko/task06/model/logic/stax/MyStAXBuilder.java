@@ -79,16 +79,16 @@ public class MyStAXBuilder extends AbstractBuilder {
                 }
             }
         } catch (XMLStreamException ex) {
-            System.err.println("StAX parsing error! " + ex.getMessage());
+            LOGGER.warn("StAX parsing error! " + ex.getMessage());
         } catch (FileNotFoundException ex) {
-            System.err.println("File " + fileName + " not found! " + ex);
+            LOGGER.warn("File " + fileName + " not found! " + ex);
         } finally {
             try {
                 if (inputStream != null) {
                     inputStream.close();
                 }
             } catch (IOException e) {
-                System.err.println("Impossible close file " + fileName + " : " + e);
+                LOGGER.warn("Impossible close file " + fileName + " : " + e);
             }
         }
     }

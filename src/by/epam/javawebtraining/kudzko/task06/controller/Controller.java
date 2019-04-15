@@ -3,6 +3,9 @@ package by.epam.javawebtraining.kudzko.task06.controller;
 import by.epam.javawebtraining.kudzko.task06.model.entity.generated.Flower;
 import by.epam.javawebtraining.kudzko.task06.model.logic.AbstractBuilder;
 import by.epam.javawebtraining.kudzko.task06.model.logic.MyBuilderFactory;
+import by.epam.javawebtraining.kudzko.task06.model.logic.Sorter;
+import by.epam.javawebtraining.kudzko.task06.model.logic.comparator.NameComparator;
+import by.epam.javawebtraining.kudzko.task06.model.logic.comparator.OriginComparator;
 import by.epam.javawebtraining.kudzko.task06.model.logic.dom.DOMDocumentCreator;
 import by.epam.javawebtraining.kudzko.task06.model.logic.dom.GreenHouseDOMBuilder;
 import by.epam.javawebtraining.kudzko.task06.model.logic.sax.GreenHouseSAXBuilder;
@@ -128,5 +131,12 @@ public class Controller {
         domBuilder.buildListFlowers(fileName);
         List<Flower> flowers6 = domBuilder.getFlowers();
         LOGGER.info("\n===DOM===\n" + flowers6 + "\n");
+
+
+       Sorter.sort(flowers6, new NameComparator(), new OriginComparator());
+
+        LOGGER.info("\n===Sorted flowers===\n" + flowers6 + "\n");
+
+
     }
 }

@@ -4,26 +4,23 @@ import by.epam.javawebtraining.kudzko.task06.model.logic.dom.GreenHouseDOMBuilde
 import by.epam.javawebtraining.kudzko.task06.model.logic.sax.GreenHouseSAXBuilder;
 import by.epam.javawebtraining.kudzko.task06.model.logic.stax.MyStAXBuilder;
 
-import javax.swing.text.html.parser.Entity;
 import java.util.HashMap;
 import java.util.Map;
 
 public class MyBuilderFactory {
-    Map<BuilderType, AbstractBuilder> builderMap;
 
-     {
+   private Map<BuilderType, AbstractBuilder> builderMap;
+
+    {
         builderMap = new HashMap<>();
 
-         builderMap.put(BuilderType.DOM, GreenHouseDOMBuilder.getInstance());
-         builderMap.put(BuilderType.SAX, GreenHouseSAXBuilder.getInstance());
-         builderMap.put(BuilderType.STAX, MyStAXBuilder.getInstance());
+        builderMap.put(BuilderType.DOM, GreenHouseDOMBuilder.getInstance());
+        builderMap.put(BuilderType.SAX, GreenHouseSAXBuilder.getInstance());
+        builderMap.put(BuilderType.STAX, MyStAXBuilder.getInstance());
     }
 
-
     public AbstractBuilder createBuilder(BuilderType type) {
-
         return builderMap.get(type);
-
     }
 
     public Map<BuilderType, AbstractBuilder> getBuilderMap() {

@@ -19,8 +19,6 @@ public abstract class AbstractBuilder {
         this.flowers = flowers;
     }
 
-    abstract public void buildListFlowers(String fileName);
-
     public List<Flower> getFlowers() {
         return flowers;
     }
@@ -37,4 +35,7 @@ public abstract class AbstractBuilder {
     public void releaseBuilder(){
         lock.unlock();
     }
+
+
+    abstract public void buildListFlowers(String fileName);
 }

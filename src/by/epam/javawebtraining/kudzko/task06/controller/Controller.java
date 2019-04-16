@@ -2,6 +2,7 @@ package by.epam.javawebtraining.kudzko.task06.controller;
 
 import by.epam.javawebtraining.kudzko.task06.model.entity.generated.Flower;
 import by.epam.javawebtraining.kudzko.task06.model.logic.AbstractBuilder;
+import by.epam.javawebtraining.kudzko.task06.model.logic.BuilderType;
 import by.epam.javawebtraining.kudzko.task06.model.logic.MyBuilderFactory;
 import by.epam.javawebtraining.kudzko.task06.model.logic.Sorter;
 import by.epam.javawebtraining.kudzko.task06.model.logic.comparator.NameComparator;
@@ -22,6 +23,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -111,31 +113,41 @@ public class Controller {
         // launch parsers with help creator
 
         MyBuilderFactory factory = new MyBuilderFactory();
-
-        AbstractBuilder saxBuilder = factory.createBuilder(MyBuilderFactory
-                .ParserType.SAX);
-        saxBuilder.buildListFlowers(fileName);
-        List<Flower> flowers4 = saxBuilder.getFlowers();
-        LOGGER.info("\n===SAX===\n" + flowers4 + "\n");
+        List<List<Flower>> lists = new ArrayList<>();
 
 
-        AbstractBuilder staxbuilder = factory.createBuilder(MyBuilderFactory
-                .ParserType.STAX);
-        staxbuilder.buildListFlowers(fileName);
-        List<Flower> flowers5 = staxbuilder.getFlowers();
-        LOGGER.info("\n===StAX===\n" + flowers5 + "\n");
+        for (BuilderType builderType : BuilderType.values() ){
+            AbstractBuilder builder = factory.createBuilder(builderType);
+            builder.buildListFlowers(fileName);
+            List<Flower> flowers = builder.getFlowers();
+            LOGGER.info("\n==="+ builderType.name()+"===\n" + flowers +
+                    "\n");
+            lists.add(flowers);
+        }
+
+//        AbstractBuilder saxBuilder = factory.createBuilder(BuilderType.SAX);
+//        saxBuilder.buildListFlowers(fileName);
+//        List<Flower> flowers4 = saxBuilder.getFlowers();
+//        LOGGER.info("\n===SAX===\n" + flowers4 + "\n");
+//
+//
+//        AbstractBuilder staxbuilder = factory.createBuilder(BuilderType.STAX);
+//        staxbuilder.buildListFlowers(fileName);
+//        List<Flower> flowers5 = staxbuilder.getFlowers();
+//        LOGGER.info("\n===StAX===\n" + flowers5 + "\n");
+//
+//
+//        AbstractBuilder domBuilder = factory.createBuilder(BuilderType.DOM);
+//        domBuilder.buildListFlowers(fileName);
+//        List<Flower> flowers6 = domBuilder.getFlowers();
+//        LOGGER.info("\n===DOM===\n" + flowers6 + "\n");
 
 
-        AbstractBuilder domBuilder = factory.createBuilder(MyBuilderFactory
-                .ParserType.DOM);
-        domBuilder.buildListFlowers(fileName);
-        List<Flower> flowers6 = domBuilder.getFlowers();
-        LOGGER.info("\n===DOM===\n" + flowers6 + "\n");
+  //     Sorter.sort(lists.get(0), new NameComparator(), new OriginComparator
+        // ());
 
+        LOGGER.info("\n===Sorted flowers===\n" + lists.get(0) + "\n");
 
-       Sorter.sort(flowers6, new NameComparator(), new OriginComparator());
-
-        LOGGER.info("\n===Sorted flowers===\n" + flowers6 + "\n");
 
 
     }
